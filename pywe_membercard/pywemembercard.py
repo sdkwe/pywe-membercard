@@ -3,6 +3,7 @@
 from furl import furl
 
 from pywe_token import BaseToken, final_access_token
+from pywe_card import card_create, card_update
 
 
 class MemberCard(BaseToken):
@@ -10,6 +11,12 @@ class MemberCard(BaseToken):
         super(MemberCard, self).__init__(appid=appid, secret=secret, token=token, storage=storage)
         # 卡券-小程序打通, Refer: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V
         self.GET_ACTIVATE_URL = self.API_DOMAIN + '/card/membercard/activate/geturl'
+
+    def create(self, data, appid=None, secret=None, token=None, storage=None):
+        return card_create(data, appid=appid, secret=secret, token=token, storage=storage)
+
+    def update(self, data, appid=None, secret=None, token=None, storage=None):
+        return card_update(data, appid=appid, secret=secret, token=token, storage=storage)
 
     def get_activate_url(self, card_id, outer_str=None, appid=None, secret=None, token=None, storage=None):
         return self.post(
@@ -30,5 +37,7 @@ class MemberCard(BaseToken):
 
 
 membercard = MemberCard()
+membercard_create = membercard.create
+membercard_update = membercard.update
 get_activate_url = membercard.get_activate_url
 get_miniapp_extraData = membercard.get_miniapp_extraData

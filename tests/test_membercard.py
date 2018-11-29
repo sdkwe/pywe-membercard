@@ -5,7 +5,7 @@ from pywe_membercard import MemberCard, get_activate_url, get_miniapp_extraData
 from local_wecfg_example import MEMBER_CARD_ID, WECHAT
 
 
-class TestMediaCommands(object):
+class TestMemberCardCommands(object):
 
     def test_get_activate_url(self):
         appid = WECHAT.get('JSAPI', {}).get('appID')
