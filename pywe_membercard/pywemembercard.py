@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from furl import furl
-
-from pywe_token import BaseToken, final_access_token
 from pywe_card import card_create, card_update
+from pywe_token import BaseToken, final_access_token
 
 
 class MemberCard(BaseToken):
@@ -33,6 +32,8 @@ class MemberCard(BaseToken):
     def get_miniapp_extraData(self, card_id, outer_str=None, appid=None, secret=None, token=None, storage=None):
         data = self.get_activate_url(card_id, outer_str=outer_str, appid=appid, secret=secret, token=token, storage=storage)
         url = data.get('url', '')
+        if not url:
+            return data
         return dict(furl(url).args)
 
 
