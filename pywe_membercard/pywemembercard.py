@@ -44,12 +44,21 @@ class MemberCard(BaseToken):
             },
         )
 
-    def get_miniapp_extraData(self, card_id, outer_str=None, appid=None, secret=None, token=None, storage=None):
+    def get_miniapp_extraData(self, card_id, outer_str=None, appid=None, secret=None, token=None, storage=None, allargs=False):
         data = self.get_activate_url(card_id, outer_str=outer_str, appid=appid, secret=secret, token=token, storage=storage)
         url = data.get('url', '')
         if not url:
             return data
-        return dict(furl(url).args)
+        args = dict(furl(url).args)
+        if allargs:
+            return args
+        # 2021年年初，微信某个版本升级，导致iOS开卡传参必须有且仅有需要的参数，多了就会报错
+        # 商户配置错误，请联系商户客服
+        return {
+            'encrypt_card_id': args.get('encrypt_card_id', ''),
+            'outer_str': args.get('outer_str', ''),
+            'biz': args.get('biz', ''),
+        }
 
 
 membercard = MemberCard()
