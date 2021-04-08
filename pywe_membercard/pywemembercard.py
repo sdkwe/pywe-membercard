@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from furl import furl
-from pywe_card import card_create, card_update
-from pywe_token import BaseToken, final_access_token
+from pywe_card import Card
+from pywe_token import final_access_token
 
 
-class MemberCard(BaseToken):
+class MemberCard(Card):
     def __init__(self, appid=None, secret=None, token=None, storage=None):
         super(MemberCard, self).__init__(appid=appid, secret=secret, token=token, storage=storage)
         # 8 管理会员卡, Refer: https://developers.weixin.qq.com/doc/offiaccount/Cards_and_Offer/Membership_Cards/Manage_Member_Card.html
@@ -14,11 +14,11 @@ class MemberCard(BaseToken):
         # 卡券-小程序打通, Refer: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1499332673_Unm7V
         self.GET_ACTIVATE_URL = self.API_DOMAIN + '/card/membercard/activate/geturl'
 
-    def create(self, data, appid=None, secret=None, token=None, storage=None):
-        return card_create(data, appid=appid, secret=secret, token=token, storage=storage)
-
-    def update(self, data, appid=None, secret=None, token=None, storage=None):
-        return card_update(data, appid=appid, secret=secret, token=token, storage=storage)
+    # def create(self, data, appid=None, secret=None, token=None, storage=None):
+    #     return card_create(data, appid=appid, secret=secret, token=token, storage=storage)
+    #
+    # def update(self, data, appid=None, secret=None, token=None, storage=None):
+    #     return card_update(data, appid=appid, secret=secret, token=token, storage=storage)
 
     def get_userinfo(self, card_id, code, appid=None, secret=None, token=None, storage=None):
         return self.post(
